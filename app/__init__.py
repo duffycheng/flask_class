@@ -1,11 +1,12 @@
 # app/__init__.py
 
-from flask import Flask
+from flask import Flask, session
 from flask_bootstrap import Bootstrap
 from flask_login import LoginManager
 from flask_mail import Mail
 from flask_moment import Moment
 from flask_sqlalchemy import SQLAlchemy
+from flask_session import Session
 from config import config
 
 
@@ -27,6 +28,8 @@ def create_app(config_name):
     mail.init_app(app)
     moment.init_app(app)
     db.init_app(app)
+    session = Session(app)
+    session.app.session_interface.db.create_all()
     login_manager.init_app(app)
 
     # blueprint registration
